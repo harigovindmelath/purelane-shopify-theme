@@ -1,0 +1,9 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "F2STlU45znoaak0LmbWvA"
+uri = "file://shopify-theme/data/purelane-products.csv"
+type = "table"
+title = "Purelane product import CSV"
+description = "Upload this file in Shopify Admin under Products → Import."
