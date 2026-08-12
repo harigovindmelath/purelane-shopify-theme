@@ -34,16 +34,20 @@ docs/
   purelane-build-notes.md
 shopify-theme/
   assets/
+    purelane-combos.css
     purelane-hero.css
     purelane-sections.css
   data/
     purelane-products.csv
   docs/
+    combo-metaobject-definition.md
     product-seed-plan.md
   sections/
+    purelane-combos.liquid
     purelane-hero.liquid
     purelane-product-grid.liquid
   snippets/
+    purelane-combo-card.liquid
     purelane-product-card.liquid
 ```
 
@@ -51,4 +55,4 @@ Theme sections, snippets, assets, and templates will be added under `shopify-the
 
 ## Current milestone
 
-The local repository foundation, first-pass product seed data, reusable product card, merchant-editable product grid, and Hero section are ready. Shopify import and catalog verification require the store connection or manual import through Shopify Admin.
+The local repository foundation, first-pass product seed data, reusable product card, merchant-editable product grid, Hero section, and combo architecture are ready. Shopify import, metaobject setup, and catalog verification require the store connection or manual work through Shopify Admin.
