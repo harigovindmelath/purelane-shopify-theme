@@ -34,12 +34,14 @@ docs/
   purelane-build-notes.md
 shopify-theme/
   assets/
+    purelane-hero.css
     purelane-sections.css
   data/
     purelane-products.csv
   docs/
     product-seed-plan.md
   sections/
+    purelane-hero.liquid
     purelane-product-grid.liquid
   snippets/
     purelane-product-card.liquid
@@ -49,4 +51,4 @@ Theme sections, snippets, assets, and templates will be added under `shopify-the
 
 ## Current milestone
 
-The local repository foundation, first-pass product seed data, reusable product card, and merchant-editable product grid are ready. Shopify import and catalog verification require the store connection or manual import through Shopify Admin.
+The local repository foundation, first-pass product seed data, reusable product card, merchant-editable product grid, and Hero section are ready. Shopify import and catalog verification require the store connection or manual import through Shopify Admin.
