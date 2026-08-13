@@ -1,0 +1,305 @@
+{{ 'purelane-sections.css' | asset_url | stylesheet_tag }}
+{{ 'purelane-hero.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign hero_background = section.settings.background_image
+  assign hero_product = section.settings.product_image
+-%}
+
+<section
+  id="PurelaneHero-{{ section.id }}"
+  class="purelane-hero"
+  data-section-id="{{ section.id }}"
+  {% if section.settings.heading != blank %}aria-labelledby="PurelaneHeroHeading-{{ section.id }}"{% else %}aria-label="Purelane introduction"{% endif %}
+  {% if hero_background != blank %}
+    style="--purelane-hero-image: url('{{ hero_background | image_url: width: 2400 }}');"
+  {% endif %}
+>
+  <div class="purelane-hero__shell">
+    <div class="purelane-hero__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="purelane-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      <h1 id="PurelaneHeroHeading-{{ section.id }}" class="purelane-hero__heading">
+        {{ section.settings.heading | escape | newline_to_br }}
+        {%- if section.settings.accent_heading != blank -%}
+          <br>
+          <span>{{ section.settings.accent_heading | escape }}</span>
+        {%- endif -%}
+      </h1>
+
+      <div class="purelane-rule" aria-hidden="true">
+        <span></span>
+        <span class="purelane-rule__mark"></span>
+        <span></span>
+      </div>
+
+      {%- if section.settings.description != blank -%}
+        <p class="purelane-hero__description">{{ section.settings.description | escape }}</p>
+      {%- endif -%}
+
+      <div class="purelane-hero__actions">
+        {%- if section.settings.primary_label != blank -%}
+          <a
+            class="purelane-button purelane-button--primary"
+            href="{{ section.settings.primary_link | default: routes.all_products_collection_url }}"
+          >
+            {{ section.settings.primary_label | escape }}
+            <span aria-hidden="true">→</span>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.secondary_label != blank -%}
+          <a
+            class="purelane-button purelane-button--secondary"
+            href="{{ section.settings.secondary_link | default: routes.root_url }}"
+          >
+            {{ section.settings.secondary_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="purelane-hero__mobile-promises" aria-label="Product promises">
+        {%- for block in section.blocks limit: 3 -%}
+          <div class="purelane-hero__promise">
+            <span class="purelane-hero__promise-icon" aria-hidden="true">
+              {%- if block.settings.icon == 'shield' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3 4.5 6v6.2c0 4.3 3.1 7.6 7.5 8.8 4.4-1.2 7.5-4.5 7.5-8.8V6L12 3Z"/>
+                  <path d="m9 12 2.2 2.2L15.4 10"/>
+                </svg>
+              {%- else -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/>
+                  <path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/>
+                </svg>
+              {%- endif -%}
+            </span>
+            <span>{{ block.settings.label | escape }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="purelane-hero__visual">
+      <div class="purelane-hero__product">
+        {%- if hero_product != blank -%}
+          <img
+            src="{{ hero_product | image_url: width: 1100 }}"
+            srcset="
+              {{ hero_product | image_url: width: 560 }} 560w,
+              {{ hero_product | image_url: width: 800 }} 800w,
+              {{ hero_product | image_url: width: 1100 }} 1100w
+            "
+            sizes="(min-width: 901px) 46vw, 92vw"
+            width="{{ hero_product.width }}"
+            height="{{ hero_product.height }}"
+            loading="eager"
+            fetchpriority="high"
+            alt="{{ section.settings.product_image_alt | escape }}"
+          >
+        {%- else -%}
+          <div class="purelane-hero__product-placeholder" aria-hidden="true">
+            <span class="purelane-hero__bottle-cap"></span>
+            <span class="purelane-hero__bottle-label">
+              <strong>PURELANE</strong>
+              <small>PLANT-POWERED<br>CLEANER</small>
+            </span>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.offer_price != blank -%}
+          <div class="purelane-hero__offer">
+            {%- if section.settings.offer_label != blank -%}
+              <span class="purelane-hero__offer-label">{{ section.settings.offer_label | escape }}</span>
+            {%- endif -%}
+            <span class="purelane-hero__offer-price">
+              <strong>{{ section.settings.offer_price | escape }}</strong>
+              {%- if section.settings.offer_compare_price != blank -%}
+                <s>{{ section.settings.offer_compare_price | escape }}</s>
+              {%- endif -%}
+            </span>
+            {%- if section.settings.offer_note != blank -%}
+              <span class="purelane-hero__offer-note">{{ section.settings.offer_note | escape }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <aside class="purelane-hero__desktop-promises" aria-label="Product promises">
+      {%- for block in section.blocks limit: 3 -%}
+        <div class="purelane-hero__desktop-promise" {{ block.shopify_attributes }}>
+          <span class="purelane-hero__promise-icon" aria-hidden="true">
+            {%- if block.settings.icon == 'shield' -%}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3 4.5 6v6.2c0 4.3 3.1 7.6 7.5 8.8 4.4-1.2 7.5-4.5 7.5-8.8V6L12 3Z"/>
+                <path d="m9 12 2.2 2.2L15.4 10"/>
+              </svg>
+            {%- else -%}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/>
+                <path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/>
+              </svg>
+            {%- endif -%}
+          </span>
+          <span>{{ block.settings.label | escape }}</span>
+        </div>
+      {%- endfor -%}
+    </aside>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane hero",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Plant-powered homecare"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Clean\nThat"
+    },
+    {
+      "type": "text",
+      "id": "accent_heading",
+      "label": "Accent heading",
+      "default": "Lasts"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Homecare that works on the toughest grime, made from plants. Kind to your home, your family, and the world outside it."
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary button label",
+      "default": "How it works"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Hero product image"
+    },
+    {
+      "type": "text",
+      "id": "product_image_alt",
+      "label": "Hero product image alt text",
+      "default": "Purelane plant-powered homecare product"
+    },
+    {
+      "type": "text",
+      "id": "offer_label",
+      "label": "Offer label",
+      "default": "Starting from"
+    },
+    {
+      "type": "text",
+      "id": "offer_price",
+      "label": "Offer price"
+    },
+    {
+      "type": "text",
+      "id": "offer_compare_price",
+      "label": "Offer compare-at price"
+    },
+    {
+      "type": "text",
+      "id": "offer_note",
+      "label": "Offer note",
+      "default": "Free shipping across India"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "promise",
+      "name": "Promise",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            }
+          ],
+          "default": "leaf"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Plant powered"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane hero",
+      "blocks": [
+        {
+          "type": "promise",
+          "settings": {
+            "icon": "leaf",
+            "label": "Plant powered"
+          }
+        },
+        {
+          "type": "promise",
+          "settings": {
+            "icon": "shield",
+            "label": "Safe for kids & pets"
+          }
+        },
+        {
+          "type": "promise",
+          "settings": {
+            "icon": "leaf",
+            "label": "Zero harsh chemicals"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

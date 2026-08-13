@@ -1,0 +1,138 @@
+{{ 'purelane-sections.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign selected_collection = section.settings.collection
+  assign products_to_show = section.settings.products_to_show
+-%}
+
+<section
+  id="PurelaneShop-{{ section.id }}"
+  class="purelane-shop"
+  data-section-id="{{ section.id }}"
+  {% if section.settings.heading != blank %}aria-labelledby="PurelaneShopHeading-{{ section.id }}"{% else %}aria-label="Purelane products"{% endif %}
+>
+  <div class="purelane-shell">
+    <header class="purelane-section-heading">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="purelane-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 id="PurelaneShopHeading-{{ section.id }}" class="purelane-display">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+
+      <div class="purelane-rule" aria-hidden="true">
+        <span></span>
+        <span class="purelane-rule__mark"></span>
+        <span></span>
+      </div>
+
+      {%- if section.settings.description != blank -%}
+        <p class="purelane-lede">{{ section.settings.description | escape }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if selected_collection != blank and selected_collection.products_count > 0 -%}
+      <div class="purelane-product-grid purelane-product-grid--{{ section.settings.columns }}">
+        {%- for product in selected_collection.products limit: products_to_show -%}
+          {%- assign image_loading = 'eager' -%}
+          {%- if forloop.index > 4 -%}
+            {%- assign image_loading = 'lazy' -%}
+          {%- endif -%}
+          {% render 'purelane-product-card',
+            product: product,
+            show_badges: section.settings.show_badges,
+            image_loading: image_loading
+          %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="purelane-empty-state">
+        <p>Select a collection in the theme editor to populate this section.</p>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.link_label != blank and selected_collection != blank -%}
+      <div class="purelane-section-action">
+        <a class="purelane-button purelane-button--primary" href="{{ selected_collection.url }}">
+          {{ section.settings.link_label | escape }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane product grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Loved by homes everywhere"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Plant-powered essentials for a cleaner home, without the harsh stuff."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Product collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Desktop columns",
+      "options": [
+        {
+          "value": "3",
+          "label": "Three"
+        },
+        {
+          "value": "4",
+          "label": "Four"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "Show product badges",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Collection link label",
+      "default": "View all products"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane product grid"
+    }
+  ]
+}
+{% endschema %}

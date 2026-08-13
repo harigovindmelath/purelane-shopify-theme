@@ -1,0 +1,92 @@
+{%- liquid
+  assign card_variant = product.selected_or_first_available_variant
+  assign card_image = product.featured_image
+  assign card_compare_at = product.compare_at_price
+  assign card_price = product.price
+  assign card_badge = blank
+
+  if product.available == false
+    assign card_badge = 'Sold out'
+  elsif product.tags contains 'bestseller'
+    assign card_badge = 'Best seller'
+  elsif product.tags contains 'top-rated'
+    assign card_badge = 'Top rated'
+  elsif product.tags contains 'new'
+    assign card_badge = 'New'
+  endif
+
+  if card_compare_at > card_price
+    assign card_savings = card_compare_at | minus: card_price
+    assign card_savings_percent = card_savings | times: 100 | divided_by: card_compare_at
+  endif
+-%}
+
+<article class="purelane-product-card">
+  <a class="purelane-product-card__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    {%- if card_badge and show_badges -%}
+      <span class="purelane-product-card__badge">{{ card_badge }}</span>
+    {%- endif -%}
+
+    {%- if card_image -%}
+      <img
+        src="{{ card_image | image_url: width: 720 }}"
+        srcset="
+          {{ card_image | image_url: width: 360 }} 360w,
+          {{ card_image | image_url: width: 540 }} 540w,
+          {{ card_image | image_url: width: 720 }} 720w
+        "
+        sizes="(min-width: 1100px) 25vw, (min-width: 720px) 33vw, 88vw"
+        width="{{ card_image.width }}"
+        height="{{ card_image.height }}"
+        loading="{{ image_loading | default: 'lazy' }}"
+        alt="{{ card_image.alt | default: product.title | escape }}"
+      >
+    {%- else -%}
+      <span class="purelane-product-card__placeholder" aria-hidden="true">
+        <span class="purelane-product-card__placeholder-mark">Purelane</span>
+        <span class="purelane-product-card__placeholder-note">Image coming soon</span>
+      </span>
+    {%- endif -%}
+  </a>
+
+  <div class="purelane-product-card__body">
+    <h3 class="purelane-product-card__title">
+      <a href="{{ product.url }}">{{ product.title | escape }}</a>
+    </h3>
+
+    <p class="purelane-product-card__meta">
+      {%- if product.available -%}
+        Available now
+      {%- else -%}
+        Currently unavailable
+      {%- endif -%}
+    </p>
+
+    <div class="purelane-product-card__price" aria-label="Price">
+      <span class="purelane-product-card__price-current">{{ card_price | money }}</span>
+      {%- if card_compare_at > card_price -%}
+        <s class="purelane-product-card__price-compare">{{ card_compare_at | money }}</s>
+        <span class="purelane-product-card__price-saving">{{ card_savings_percent }}% off</span>
+      {%- endif -%}
+    </div>
+
+    {%- if product.available -%}
+      <form method="post" action="{{ routes.cart_add_url }}" class="purelane-product-card__form">
+        <input type="hidden" name="id" value="{{ card_variant.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <button
+          class="purelane-button purelane-button--secondary"
+          type="submit"
+          name="add"
+          aria-label="Add {{ product.title | escape }} to cart"
+        >
+          Add to cart
+        </button>
+      </form>
+    {%- else -%}
+      <button class="purelane-button purelane-button--disabled" type="button" disabled>
+        Sold out
+      </button>
+    {%- endif -%}
+  </div>
+</article>
