@@ -7,6 +7,7 @@
   id="PurelaneCombos-{{ section.id }}"
   class="purelane-combos"
   data-section-id="{{ section.id }}"
+  {% if section.settings.heading != blank %}aria-labelledby="PurelaneCombosHeading-{{ section.id }}"{% else %}aria-label="Purelane combos"{% endif %}
 >
   <div class="purelane-shell">
     <header class="purelane-section-heading">
@@ -15,7 +16,7 @@
       {%- endif -%}
 
       {%- if section.settings.heading != blank -%}
-        <h2 class="purelane-display">{{ section.settings.heading | escape }}</h2>
+        <h2 id="PurelaneCombosHeading-{{ section.id }}" class="purelane-display">{{ section.settings.heading | escape }}</h2>
       {%- endif -%}
 
       <div class="purelane-rule" aria-hidden="true">
@@ -32,7 +33,9 @@
     {%- if combo_entries != blank and combo_entries.size > 0 -%}
       <div class="purelane-combo-rail" tabindex="0" aria-label="Purelane combos">
         {%- for combo in combo_entries -%}
-          {% render 'purelane-combo-card', combo: combo %}
+          {%- if combo.combo_product.value != blank and combo.included_products.value != blank -%}
+            {% render 'purelane-combo-card', combo: combo %}
+          {%- endif -%}
         {%- endfor -%}
       </div>
 

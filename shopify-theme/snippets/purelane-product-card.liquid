@@ -74,7 +74,12 @@
       <form method="post" action="{{ routes.cart_add_url }}" class="purelane-product-card__form">
         <input type="hidden" name="id" value="{{ card_variant.id }}">
         <input type="hidden" name="quantity" value="1">
-        <button class="purelane-button purelane-button--secondary" type="submit">
+        <button
+          class="purelane-button purelane-button--secondary"
+          type="submit"
+          name="add"
+          aria-label="Add {{ product.title | escape }} to cart"
+        >
           Add to cart
         </button>
       </form>

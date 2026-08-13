@@ -69,7 +69,12 @@
       <form method="post" action="{{ routes.cart_add_url }}">
         <input type="hidden" name="id" value="{{ combo_product.selected_or_first_available_variant.id }}">
         <input type="hidden" name="quantity" value="1">
-        <button class="purelane-button purelane-button--secondary" type="submit">
+         <button
+           class="purelane-button purelane-button--secondary"
+           type="submit"
+           name="add"
+           aria-label="Add {{ combo_title | escape }} to cart"
+         >
           Shop bundle <span aria-hidden="true">→</span>
         </button>
       </form>

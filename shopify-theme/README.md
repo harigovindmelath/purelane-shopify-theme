@@ -28,6 +28,10 @@ templates/
 
 The theme files will be added incrementally. Each milestone should remain independently reviewable and uploadable to the Dawn development theme.
 
+`templates/index.json` contains an optional homepage seed with the three
+prioritized sections in the intended order. For the exact upload order and
+Theme Editor setup, see `docs/dawn-install-checklist.md`.
+
 ## Local workflow
 
 1. Keep a clean Dawn 16.0.0 theme as the base.

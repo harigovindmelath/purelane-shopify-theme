@@ -10,6 +10,7 @@
   id="PurelaneHero-{{ section.id }}"
   class="purelane-hero"
   data-section-id="{{ section.id }}"
+  {% if section.settings.heading != blank %}aria-labelledby="PurelaneHeroHeading-{{ section.id }}"{% else %}aria-label="Purelane introduction"{% endif %}
   {% if hero_background != blank %}
     style="--purelane-hero-image: url('{{ hero_background | image_url: width: 2400 }}');"
   {% endif %}
@@ -20,7 +21,7 @@
         <p class="purelane-eyebrow">{{ section.settings.eyebrow | escape }}</p>
       {%- endif -%}
 
-      <h1 class="purelane-hero__heading">
+      <h1 id="PurelaneHeroHeading-{{ section.id }}" class="purelane-hero__heading">
         {{ section.settings.heading | escape | newline_to_br }}
         {%- if section.settings.accent_heading != blank -%}
           <br>

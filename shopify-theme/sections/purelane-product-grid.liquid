@@ -9,6 +9,7 @@
   id="PurelaneShop-{{ section.id }}"
   class="purelane-shop"
   data-section-id="{{ section.id }}"
+  {% if section.settings.heading != blank %}aria-labelledby="PurelaneShopHeading-{{ section.id }}"{% else %}aria-label="Purelane products"{% endif %}
 >
   <div class="purelane-shell">
     <header class="purelane-section-heading">
@@ -17,7 +18,7 @@
       {%- endif -%}
 
       {%- if section.settings.heading != blank -%}
-        <h2 class="purelane-display">{{ section.settings.heading | escape }}</h2>
+        <h2 id="PurelaneShopHeading-{{ section.id }}" class="purelane-display">{{ section.settings.heading | escape }}</h2>
       {%- endif -%}
 
       <div class="purelane-rule" aria-hidden="true">
