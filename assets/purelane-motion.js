@@ -45,7 +45,26 @@
       if ('IntersectionObserver' in window) new IntersectionObserver((entries) => entries.forEach((entry) => entry.isIntersecting ? play() : stop()), { threshold: .2 }).observe(stage); else play();
     });
   };
-  const init = (root = document) => { document.documentElement.classList.add('purelane-motion-ready'); reveal(root); enableHeroMotion(root); enableHeroStage(root); enableReviewMarquee(root); };
+  const enableComboRailMotion = (root = document) => {
+    if (reducedMotion || !window.matchMedia('(hover: hover)').matches) return;
+    root.querySelectorAll('.purelane-combo-rail:not([data-purelane-rail-motion])').forEach((rail) => {
+      const cards = [...rail.querySelectorAll('.purelane-combo-card')];
+      if (cards.length < 2) return;
+      rail.dataset.purelaneRailMotion = 'true';
+      let timer; let visible = false;
+      const cardStep = () => Math.max(rail.clientWidth * .78, cards[0].getBoundingClientRect().width + 14);
+      const advance = () => {
+        const atEnd = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 8;
+        rail.scrollTo({ left: atEnd ? 0 : Math.min(rail.scrollLeft + cardStep(), rail.scrollWidth), behavior: 'smooth' });
+      };
+      const stop = () => { window.clearInterval(timer); timer = undefined; };
+      const play = () => { if (visible && !timer) timer = window.setInterval(advance, 5200); };
+      rail.addEventListener('mouseenter', stop); rail.addEventListener('mouseleave', play);
+      rail.addEventListener('focusin', stop); rail.addEventListener('focusout', (event) => { if (!rail.contains(event.relatedTarget)) play(); });
+      new IntersectionObserver((entries) => entries.forEach((entry) => { visible = entry.isIntersecting; visible ? play() : stop(); }), { threshold: .25 }).observe(rail);
+    });
+  };
+  const init = (root = document) => { document.documentElement.classList.add('purelane-motion-ready'); reveal(root); enableHeroMotion(root); enableHeroStage(root); enableComboRailMotion(root); enableReviewMarquee(root); };
   document.addEventListener('DOMContentLoaded', () => init(), { once: true });
   document.addEventListener('shopify:section:load', (event) => init(event.target));
 })();
