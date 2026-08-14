@@ -21,7 +21,7 @@
     </div>
 
     <div class="purelane-hero__visual">
-      {% if slide_blocks.size > 0 %}
+      {% if section.settings.enable_featured_stage and slide_blocks.size > 0 %}
         <div class="purelane-hero-stage" data-purelane-hero-stage aria-roledescription="carousel" aria-label="Featured Purelane offers">
           <div class="purelane-hero-stage__slides">
             {% for block in slide_blocks %}
@@ -51,7 +51,7 @@
           {% if slide_blocks.size > 1 %}<div class="purelane-hero-stage__dots" aria-label="Choose featured offer">{% for block in slide_blocks %}<button type="button" class="{% if forloop.first %}is-active{% endif %}" data-purelane-hero-dot aria-label="Show offer {{ forloop.index }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}"></button>{% endfor %}</div>{% endif %}
         </div>
       {% else %}
-        <div class="purelane-hero__product"><div class="purelane-hero__product-placeholder" aria-hidden="true"></div></div>
+        <div class="purelane-hero__ambient" aria-hidden="true"><span class="purelane-hero__ambient-orb purelane-hero__ambient-orb--one"></span><span class="purelane-hero__ambient-orb purelane-hero__ambient-orb--two"></span><span class="purelane-hero__ambient-ripple"></span><span class="purelane-hero__ambient-spark purelane-hero__ambient-spark--one">✦</span><span class="purelane-hero__ambient-spark purelane-hero__ambient-spark--two">✦</span><p>Plant-powered<br>homecare</p></div>
       {% endif %}
     </div>
 
@@ -63,7 +63,7 @@
 {
   "name":"Purelane hero","tag":"section","class":"section","max_blocks":9,
   "settings":[
-    {"type":"image_picker","id":"background_image","label":"Background image"},
+    {"type":"image_picker","id":"background_image","label":"Background image"},\n    {"type":"checkbox","id":"enable_featured_stage","label":"Enable featured-product stage","default":false,"info":"Leave off to use the animated ambient Hero artwork instead."},
     {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Plant-powered homecare"},
     {"type":"textarea","id":"heading","label":"Heading","default":"Clean\nThat"},
     {"type":"text","id":"accent_heading","label":"Accent heading","default":"Lasts"},
