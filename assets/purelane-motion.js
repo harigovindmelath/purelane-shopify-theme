@@ -29,7 +29,23 @@
       syncDuration(); new ResizeObserver(syncDuration).observe(track); section.classList.add('is-marquee');
     });
   };
-  const init = (root = document) => { document.documentElement.classList.add('purelane-motion-ready'); reveal(root); enableHeroMotion(root); enableReviewMarquee(root); };
+  const enableHeroStage = (root = document) => {
+    root.querySelectorAll('[data-purelane-hero-stage]:not([data-purelane-hero-stage-ready])').forEach((stage) => {
+      const slides = [...stage.querySelectorAll('[data-purelane-hero-slide]')];
+      const dots = [...stage.querySelectorAll('[data-purelane-hero-dot]')];
+      if (slides.length < 2) return;
+      stage.dataset.purelaneHeroStageReady = 'true';
+      let index = 0; let timer;
+      const show = (next) => { index = (next + slides.length) % slides.length; slides.forEach((slide, i) => { const active = i === index; slide.classList.toggle('is-active', active); slide.setAttribute('aria-hidden', String(!active)); }); dots.forEach((dot, i) => { const active = i === index; dot.classList.toggle('is-active', active); dot.setAttribute('aria-current', String(active)); }); };
+      const stop = () => { window.clearInterval(timer); timer = undefined; };
+      const play = () => { if (!reducedMotion && !timer) timer = window.setInterval(() => show(index + 1), 3800); };
+      dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); stop(); play(); }));
+      stage.addEventListener('mouseenter', stop); stage.addEventListener('mouseleave', play);
+      stage.addEventListener('focusin', stop); stage.addEventListener('focusout', (event) => { if (!stage.contains(event.relatedTarget)) play(); });
+      if ('IntersectionObserver' in window) new IntersectionObserver((entries) => entries.forEach((entry) => entry.isIntersecting ? play() : stop()), { threshold: .2 }).observe(stage); else play();
+    });
+  };
+  const init = (root = document) => { document.documentElement.classList.add('purelane-motion-ready'); reveal(root); enableHeroMotion(root); enableHeroStage(root); enableReviewMarquee(root); };
   document.addEventListener('DOMContentLoaded', () => init(), { once: true });
   document.addEventListener('shopify:section:load', (event) => init(event.target));
 })();
