@@ -58,6 +58,7 @@
     <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'standard-actions-override.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'purelane-motion.js' | asset_url }}" defer="defer"></script>
 
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
@@ -319,7 +320,7 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
-    {{ 'purelane-hero.css' | asset_url | stylesheet_tag }} {{ 'purelane-sections.css' | asset_url | stylesheet_tag }} {{ 'purelane-combos.css' | asset_url | stylesheet_tag }}
+    {{ 'purelane-hero.css' | asset_url | stylesheet_tag }} {{ 'purelane-sections.css' | asset_url | stylesheet_tag }} {{ 'purelane-combos.css' | asset_url | stylesheet_tag }} {{ 'purelane-motion.css' | asset_url | stylesheet_tag }}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
