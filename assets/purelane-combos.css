@@ -285,3 +285,5 @@
 .purelane-combo-card__product-media{overflow:hidden}
 .purelane-combo-card__product-media img{width:100%;height:100%;object-fit:contain;object-position:center;transform:none;padding:.25rem}
 @media(max-width:520px){.purelane-combo-card__tray{min-height:11.2rem}.purelane-combo-card__products{min-height:7.7rem}.purelane-combo-card__product-media{width:4.2rem;height:4.2rem}.purelane-combo-card__product-media img{padding:.18rem}}
+/* Desktop combo rail advances one card at a time; touch devices keep native swipe control. */
+@media (hover:hover){.purelane-combo-rail{scroll-behavior:smooth}.purelane-combo-rail::after{flex:0 0 .5rem;content:""}}
