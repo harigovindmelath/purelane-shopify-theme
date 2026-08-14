@@ -7,6 +7,16 @@
 {{ 'purelane-hero.css' | asset_url | stylesheet_tag }}
 
 <section id="PurelaneHero-{{ section.id }}" class="purelane-hero" data-section-id="{{ section.id }}" {% if hero_background != blank %}style="--purelane-hero-image: url('{{ hero_background | image_url: width: 2400 }}');"{% endif %}>
+  <div class="purelane-hero__proof-bar" aria-label="Purelane offers">
+    <div class="purelane-hero__proof-track">
+      <span>★ Loved by 30,000+ homes</span>
+      <span>✦ Buy any 3 at a flat ₹499</span>
+      <span>✓ Plant-powered and family-safe</span>
+      <span aria-hidden="true">★ Loved by 30,000+ homes</span>
+      <span aria-hidden="true">✦ Buy any 3 at a flat ₹499</span>
+      <span aria-hidden="true">✓ Plant-powered and family-safe</span>
+    </div>
+  </div>
   <div class="purelane-hero__shell">
     <div class="purelane-hero__copy">
       {% if section.settings.eyebrow != blank %}<p class="purelane-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
