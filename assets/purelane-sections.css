@@ -262,6 +262,11 @@
 .purelane-button:hover {
   transform: translateY(-1px);
 }
+.purelane-combo-card--highlighted .purelane-button--secondary {
+  border-color: var(--purelane-accent);
+  background: rgba(240, 160, 60, 0.12);
+  color: var(--purelane-accent);
+}
 
 .purelane-button:focus-visible,
 .purelane-product-card__media:focus-visible,
