@@ -387,3 +387,23 @@
 .purelane-hero-stage__dots button:focus-visible { outline:2px solid #fff; outline-offset:3px; }
 @media (max-width:900px) { .purelane-hero-stage__dots { bottom:-.2rem; } }
 @media (prefers-reduced-motion:reduce) { .purelane-hero-stage__slide,.purelane-hero-stage__product,.purelane-hero-stage .purelane-hero__offer { transition:none; } }
+/* Final hero polish: proof ticker and an asset-free ambient visual */
+.purelane-hero__proof-bar{position:absolute;z-index:3;top:clamp(4.8rem,9vh,6.2rem);left:0;width:100%;overflow:hidden;border-top:1px solid rgba(236,230,247,.13);border-bottom:1px solid rgba(236,230,247,.13);background:rgba(5,43,42,.32);backdrop-filter:blur(12px)}
+.purelane-hero__proof-track{display:flex;width:max-content;gap:2.5rem;padding:.52rem 1.2rem;color:rgba(236,230,247,.86);font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;animation:purelane-proof-ticker 26s linear infinite}
+.purelane-hero__proof-track span:nth-child(3n+2){color:var(--purelane-accent)}
+@keyframes purelane-proof-ticker{to{transform:translateX(-50%)}}
+.purelane-hero__ambient{position:absolute;right:2%;bottom:5%;display:grid;width:min(100%,31rem);height:85%;place-items:center;isolation:isolate;transform:translate3d(var(--purelane-product-x,0),var(--purelane-product-y,0),0);transition:transform .4s ease}
+.purelane-hero__ambient::before{position:absolute;z-index:-2;width:72%;height:72%;border:1px solid rgba(236,230,247,.22);border-radius:50%;box-shadow:0 0 0 2.3rem rgba(236,230,247,.035),0 0 0 5.2rem rgba(240,160,60,.035),0 0 8rem rgba(240,160,60,.25);content:"";animation:purelane-ambient-breathe 6s ease-in-out infinite}
+.purelane-hero__ambient-orb{position:absolute;z-index:-1;border-radius:50%;filter:blur(1px);opacity:.9}
+.purelane-hero__ambient-orb--one{width:62%;height:62%;background:radial-gradient(circle at 32% 28%,rgba(231,255,238,.72),rgba(68,173,147,.35) 35%,rgba(5,67,66,.08) 68%,transparent 70%);animation:purelane-ambient-drift 9s ease-in-out infinite}
+.purelane-hero__ambient-orb--two{right:6%;bottom:10%;width:30%;height:30%;background:radial-gradient(circle at 40% 35%,rgba(244,177,84,.82),rgba(146,77,123,.35) 50%,transparent 72%);animation:purelane-ambient-drift 7s ease-in-out -2s infinite reverse}
+.purelane-hero__ambient-ripple{position:absolute;width:40%;height:40%;border:1px solid rgba(236,230,247,.38);border-radius:50%;animation:purelane-ambient-ripple 4.6s ease-out infinite}
+.purelane-hero__ambient-spark{position:absolute;color:var(--purelane-accent);font-size:1.5rem;text-shadow:0 0 1.5rem rgba(240,160,60,.8);animation:purelane-ambient-spark 4s ease-in-out infinite}
+.purelane-hero__ambient-spark--one{top:18%;left:19%}.purelane-hero__ambient-spark--two{right:16%;bottom:21%;font-size:1rem;animation-delay:-1.8s}
+.purelane-hero__ambient p{margin:0;color:rgba(250,247,253,.8);font-family:Outfit,system-ui,sans-serif;font-size:clamp(1.15rem,2.5vw,1.75rem);font-weight:800;letter-spacing:.1em;line-height:1.15;text-align:center;text-shadow:0 .3rem 1.8rem rgba(2,20,19,.65);text-transform:uppercase}
+@keyframes purelane-ambient-breathe{50%{transform:scale(1.07);box-shadow:0 0 0 2.8rem rgba(236,230,247,.025),0 0 0 6rem rgba(240,160,60,.025),0 0 10rem rgba(240,160,60,.33)}}
+@keyframes purelane-ambient-drift{50%{transform:translate(1.4rem,-1.1rem) scale(1.07)}}
+@keyframes purelane-ambient-ripple{0%{opacity:.8;transform:scale(.45)}100%{opacity:0;transform:scale(2.4)}}
+@keyframes purelane-ambient-spark{50%{opacity:.35;transform:translateY(-.9rem) rotate(45deg)}}
+@media(max-width:900px){.purelane-hero__proof-bar{top:5.1rem}.purelane-hero__proof-track{animation-duration:22s}.purelane-hero__ambient{right:50%;bottom:0;width:min(88vw,27rem);height:94%;transform:translateX(50%)}}
+@media(prefers-reduced-motion:reduce){.purelane-hero__proof-track,.purelane-hero__ambient::before,.purelane-hero__ambient-orb,.purelane-hero__ambient-ripple,.purelane-hero__ambient-spark{animation:none}.purelane-hero__proof-track{width:auto;justify-content:center}.purelane-hero__proof-track span:nth-child(n+4){display:none}.purelane-hero__ambient{transition:none}}
