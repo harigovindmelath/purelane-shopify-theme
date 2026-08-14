@@ -19,16 +19,12 @@
             <article class="purelane-bundle-card {% if combo.highlighted.value %}purelane-bundle-card--featured{% endif %}">
               <div class="purelane-bundle-card__top">
                 {% if combo.badge.value != blank %}<span class="purelane-bundle-card__badge">{{ combo.badge.value | escape }}</span>{% endif %}
-                <div class="purelane-bundle-card__products" aria-hidden="true">
-                  {% for included_product in included_products limit: 5 %}
-                    <span class="purelane-bundle-card__product">
-                      {% if included_product.featured_image %}
-                        {{ included_product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80, 120, 160', alt: '' }}
-                      {% else %}
-                        <span class="purelane-bundle-card__product-placeholder">✦</span>
-                      {% endif %}
-                    </span>
-                  {% endfor %}
+                <div class="purelane-bundle-card__media">
+                  {% if combo_product.featured_image %}
+                    {{ combo_product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 860px) 33vw, 100vw', alt: combo_product.featured_image.alt | default: combo_product.title }}
+                  {% else %}
+                    <span class="purelane-bundle-card__product-placeholder">✦</span>
+                  {% endif %}
                 </div>
               </div>
               <div class="purelane-bundle-card__body">
