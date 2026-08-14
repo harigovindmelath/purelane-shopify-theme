@@ -38,7 +38,7 @@
                 </div>
                 {% if combo.savings_label.value != blank %}<p class="purelane-bundle-card__saving">{{ combo.savings_label.value | escape }}</p>{% endif %}
                 <p class="purelane-bundle-card__fine-print">Inclusive of all taxes · COD available</p>
-                <a class="purelane-button {% if combo.highlighted.value %}purelane-button--primary{% else %}purelane-button--secondary{% endif %}" href="{{ combo_product.url }}">Shop this box</a>
+                <a class="purelane-button purelane-button--secondary" href="{{ combo_product.url }}">Shop this box</a>
               </div>
             </article>
           {% endif %}
