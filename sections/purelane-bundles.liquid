@@ -21,7 +21,8 @@
                 {% if combo.badge.value != blank %}<span class="purelane-bundle-card__badge">{{ combo.badge.value | escape }}</span>{% endif %}
                 <div class="purelane-bundle-card__media">
                   {% if combo_product.featured_image %}
-                    {{ combo_product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 860px) 33vw, 100vw', alt: combo_product.featured_image.alt | default: combo_product.title }}
+                    {% assign bundle_image_alt = combo_product.featured_image.alt | default: combo_product.title %}
+                    {{ combo_product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 860px) 33vw, 100vw', alt: bundle_image_alt }}
                   {% else %}
                     <span class="purelane-bundle-card__product-placeholder">✦</span>
                   {% endif %}
