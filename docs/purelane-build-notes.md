@@ -1,52 +1,40 @@
 # Purelane Shopify Theme — Build Notes
 
-## Scope delivered
-The Dawn-based homepage rebuild covers the assignment sections:
+## What I'd flag about the original prototype file
 
-1. Hero
-2. Reviews
-3. Combos
-4. Bundles
-5. Product Grid / Shop
+The prototype (`purelane-homepage.html`) was a strong visual reference but not
+production-safe as-is:
 
-Homepage order: Hero → Reviews → Combos → Bundles → Product Grid / Shop.
+- All product data — prices, compare-at prices, star ratings, review counts — was
+  hardcoded directly into the markup. None of it could be changed by a merchant
+  without editing code.
+- Reviews were faked and literally duplicated in the DOM (the same 5 reviews
+  repeated twice) to fake an infinite marquee loop, rather than looping a single
+  data source.
+- Product art for the Shop grid and Combos was hand-drawn inline SVG, pasted
+  per-instance rather than reused as a component — the same visual pattern
+  repeated 100+ lines of markup per card.
+- There was no handling anywhere for real-world catalog states: sold-out
+  products, products with no image, or long product titles. The layout was never
+  tested against anything other than clean placeholder data.
+- The side nav links to `#voices`, but the actual reviews section id is
+  `#reviews` — a dead anchor bug already present in the prototype.
+- Scroll-triggered reveal animations had no `prefers-reduced-motion` handling.
 
-## Shopify data wiring
-- Product Grid uses the selected Bestsellers collection, real product URLs, prices, sold-out state, and empty-image handling.
-- Combos and Bundles use the `purelane_combo` metaobject:
-  - `title`
-  - `short_description`
-  - `badge`
-  - `combo_product`
-  - `included_products`
-  - `savings_label`
-  - `highlighted`
-- Bundle cards render each combo product's featured image.
+## What I changed, and why
 
-## Hero
-- The Hero keeps the green/purple visual direction from the prototype.
-- A proof-and-offer ticker appears at the top of the Hero:
-  - Loved by 30,000+ homes
-  - Buy any 3 at a flat ₹499
-  - Plant-powered and family-safe
-- Default Hero art is an asset-free animated ambient composition, so it does not depend on a transparent bottle image.
-- The optional featured-product stage remains available in Theme Editor but is off by default. It supports one, two, or three Shopify products per slide and links to a product or a manually selected destination.
-
-## Motion and accessibility
-- `assets/purelane-motion.js` handles reveal transitions, desktop pointer response, Hero stage rotation, and the desktop review marquee.
-- Motion is disabled under `prefers-reduced-motion: reduce`.
-- The review marquee's cloned cards are hidden from assistive technology.
-- Hero carousel dots support pointer and keyboard focus, and auto-rotation pauses on hover/focus.
-
-## Recent visual polish
-- Combo rail thumbnails now use `object-fit: contain`, avoiding cut-off product art. Combo cards have taller trays and larger image frames.
-- Bundle cards use a larger image area with `object-fit: contain` so composite bundle images remain readable.
-- The product carousel is opt-in so unconfigured product blocks cannot spoil the default Hero.
-
-## Final manual QA checklist
-- Confirm GitHub sync completes in Shopify before previewing.
-- Preview the homepage at desktop and mobile widths.
-- In Theme Editor, leave **Enable featured-product stage** off unless all relevant product images are configured.
-- Check the product card for Magic Eraser (sold out/no image), a long title, and keyboard focus.
-- Test with the device/system reduced-motion setting enabled.
-- Confirm the live store uses the intended background image and that the Hero proof ticker remains below the header.
+- Replaced all hardcoded product/price/review data with real Shopify objects:
+  products, collections, and a custom `purelane_combo` metaobject for combo and
+  bundle merchandising (fields: `title`, `short_description`, `badge`,
+  `combo_product`, `included_products`, `savings_label`, `highlighted`). The
+  combo's real Shopify product is always the source of truth for price,
+  inventory, and cart behavior — nothing is calculated or hardcoded in Liquid.
+- Rebuilt repeated card markup (product cards, combo cards) as single reusable
+  Liquid snippets instead of copy-pasted blocks, so a design tweak only needs to
+  happen in one place.
+- Added real edge-case handling in the Product Grid: sold-out state (disabled
+  button + badge), no-image fallback, and verified a long product title doesn't
+  break the card layout — tested against seeded catalog data including all three
+  cases.
+- Rewrote the reveal-on-scroll animation using a shared `IntersectionObserver`
+  utility
