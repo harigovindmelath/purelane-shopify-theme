@@ -61,7 +61,18 @@
           {% if slide_blocks.size > 1 %}<div class="purelane-hero-stage__dots" aria-label="Choose featured offer">{% for block in slide_blocks %}<button type="button" class="{% if forloop.first %}is-active{% endif %}" data-purelane-hero-dot aria-label="Show offer {{ forloop.index }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}"></button>{% endfor %}</div>{% endif %}
         </div>
       {% else %}
-        <div class="purelane-hero__ambient" aria-hidden="true"><span class="purelane-hero__ambient-orb purelane-hero__ambient-orb--one"></span><span class="purelane-hero__ambient-orb purelane-hero__ambient-orb--two"></span><span class="purelane-hero__ambient-ripple"></span><span class="purelane-hero__ambient-spark purelane-hero__ambient-spark--one">✦</span><span class="purelane-hero__ambient-spark purelane-hero__ambient-spark--two">✦</span><p>Plant-powered<br>homecare</p></div>
+        <div class="purelane-hero__ambient" aria-hidden="true">
+          <span class="purelane-hero__ambient-wave purelane-hero__ambient-wave--one"></span>
+          <span class="purelane-hero__ambient-wave purelane-hero__ambient-wave--two"></span>
+          <span class="purelane-hero__ambient-orb purelane-hero__ambient-orb--one"></span>
+          <span class="purelane-hero__ambient-orb purelane-hero__ambient-orb--two"></span>
+          <span class="purelane-hero__ambient-ripple"></span>
+          <span class="purelane-hero__ambient-spark purelane-hero__ambient-spark--one">✦</span>
+          <span class="purelane-hero__ambient-spark purelane-hero__ambient-spark--two">✦</span>
+          <div class="purelane-hero__ambient-core"><span class="purelane-hero__ambient-core-mark">✦</span><p>Clean home.<br>Clear mind.</p></div>
+          <span class="purelane-hero__ambient-note purelane-hero__ambient-note--one"><b>Plant-powered</b><small>tough on grime</small></span>
+          <span class="purelane-hero__ambient-note purelane-hero__ambient-note--two"><b>Kind by nature</b><small>safe around family</small></span>
+        </div>
       {% endif %}
     </div>
 
