@@ -428,3 +428,10 @@
 @media(max-width:900px){.purelane-hero__ambient-core{width:min(54%,15rem)}.purelane-hero__ambient-note{min-width:7.3rem;padding:.58rem .65rem}.purelane-hero__ambient-note--one{left:3%;top:14%}.purelane-hero__ambient-note--two{right:2%;bottom:17%}}
 @media(max-width:520px){.purelane-hero__ambient-note{min-width:auto}.purelane-hero__ambient-note b{font-size:.52rem}.purelane-hero__ambient-note small{font-size:.44rem}.purelane-hero__ambient-wave{width:92%}}
 @media(prefers-reduced-motion:reduce){.purelane-hero__ambient-core,.purelane-hero__ambient-wave,.purelane-hero__ambient-note{animation:none}.purelane-hero::before{transition:none}}
+/* Improve Hero trust-panel readability on desktop. */
+@media (min-width: 901px) {
+  .purelane-hero__desktop-promises { width: 8.35rem; border-radius: 1.35rem; }
+  .purelane-hero__desktop-promise { gap: .65rem; padding: 1rem .55rem; font-size: .68rem; line-height: 1.45; }
+  .purelane-hero__desktop-promise .purelane-hero__promise-icon { width: 2.7rem; height: 2.7rem; }
+  .purelane-hero__desktop-promise .purelane-hero__promise-icon svg { width: 1.3rem; height: 1.3rem; }
+}
